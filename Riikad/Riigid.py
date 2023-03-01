@@ -1,17 +1,26 @@
 from OmaMoodul import *
-x={}
+sõnastik={}
 while True:
-    v=int(input('Answer: '))
+    v=int(input('''
+    0-välju
+    1-loeme failist
+    2-Salvestame failisse 
+    3-Vaata sõnastiku
+    4-Näita riigi ja tema pealinna
+    5-Paranda viga sõnastikus
+    6-Test
+    '''))
     if v==0:
-        pass
-    elif v==1:
-        x=Loe('Europa_Riigid.txt')
-        x=print(sonastik)
         break
+    if v==1:
+        sõnastik=Loe_failist('Europa_Riigid')
     elif v==2:
-        new_key_value(sonastik)
-        continue
+        Kirjuta_failisse('Europa_Riigid')
     elif v==3:
-        x=new_key_value('Europa_Riigid.txt')
-        x=print(sonastik)
-        break
+        vaata_sõnastiku('Europa_Riigid')
+    elif v==4:
+       RP_find('Europa_Riigid')
+    elif v==5:
+        paranda('Europa_Riigid')
+    elif v==6:
+        test('Europa_Riigid')

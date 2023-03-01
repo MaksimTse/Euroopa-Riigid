@@ -6,7 +6,7 @@ def Loe_failist(fail:dict):
     '''
     loeb failist
     '''
-    file=open('Europa_Riigid.txt','r',encoding='utf-8-sig')
+    file=open(fail,'r',encoding='utf-8-sig')
     for line in file:
         k, v=line.strip().split('-')
     file.close()
@@ -16,7 +16,7 @@ def Kirjuta_failisse(fail:dict):
     '''
     sisetab failise
     '''
-    file=open('Europa_Riigid.txt','r',encoding='utf-8-sig')
+    file=open(fail,'r',encoding='utf-8-sig')
     for line in file:
         k, v=line.strip().split('-')
         sõnastik[k.strip()] = v.strip()    
@@ -30,7 +30,7 @@ def Kirjuta_failisse(fail:dict):
 def vaata_sõnastiku(fail:dict):
     r={}
     p={}
-    file=open('Europa_Riigid.txt','r',encoding='utf-8-sig')
+    file=open(fail,'r',encoding='utf-8-sig')
     for line in file:
         k, v=line.strip().split('-')       
         r[k]=v
@@ -40,26 +40,34 @@ def vaata_sõnastiku(fail:dict):
     return r, p
 
 def RP_find(fail:dict):
-    sona=input("Kirjutage riik või linn ")
-    vale=input("Kas soovite lisada uue riigi või pealinna? (jah või ei) ").lower()
-    while vale not in ["jah","ei"]:
-        vale=input("Kirjutage ainult jah või ei ")
-    if vale=="jah":
-        if sona in fail:
-            r=sona
-            p=input("Kirjutage pealinn ")
-        else:
-            p=sona
-            r=input("Kirjutage riigi ")
-        fail.update({r:p}) 
-        fail.update({p:r})
-    else:
-        print("Kahjuks")
-    return fail
+    file=open('Europa_Riigid','r',encoding='utf-8-sig')
+    for line in file:
+        k, v=line.strip().split('-')
+        sõnastik[k.strip()] = v.strip()
+    file.close()
+    Riigid = list(sõnastik.keys())
+    Pealinnad = list(sõnastik.values())
+    RvP=input('Otsime riik või pealinn: ')
+    while RvP not in ["riik","pealinn"]:
+        RvP=input('riik või pealinn: ')
+    if RvP=='riik':
+        OtsimeR=input('Kirjuta riigi nimi: ')
+        while OtsimeR not in Riigid:
+            OtsimeR=input('Kirjuta riigi õigesti: ')
+        num1=Riigid.index(OtsimeR)
+        if OtsimeR == Riigid[num1]:
+            print(OtsimeR,Pealinnad[num1])
+    elif RvP=='pealinn':
+        OtsimeP=input('Kirjuta pealinna nimi: ')
+        while OtsimeP not in Pealinnad:
+            OtsimeP=input('Kirjuta riigi õigesti: ')
+        num1=Pealinnad.index(OtsimeP)
+        if OtsimeP == Pealinnad[num1]:
+            print(OtsimeP},'-',Riigid[num1])
           
 
 def paranda(fail: dict):
-    with open('Europa_Riigid.txt', 'r', encoding='utf-8-sig') as file:
+    with open('Europa_Riigid', 'r', encoding='utf-8-sig') as file:
         for line in file:
             k, v = line.strip().split('-')
             sõnastik[k.strip()] = v.strip()
@@ -104,7 +112,7 @@ def paranda(fail: dict):
 
 def test(fail:dict):
     a=[]
-    võit=kaotus=0
+    vale=õige=0
     game=[]
     file=open('Europa_Riigid','r',encoding='utf-8-sig')
     for line in file:
@@ -127,33 +135,33 @@ def test(fail:dict):
             if tematähendus==Pealinnad[num]:
                 game.append(f'Mäng number {i+1} {valik} keeles - Õige')
                 print('Õige')
-                võit+=1
+                õige+=1
             else:
                 game.append(f'Mäng number {i+1}, {valik} keeles - Vale') 
                 print('Vale')
-                kaotus+=1
+                vale+=1
         else:
             rana=Pealinnad[num]
             tematähendus=input(f'Mis on riigi {rana} pealinn: ') 
             if tematähendus==Pealinnad[num]:
                 game.append(f'Mäng number {i+1} {valik} keeles - Õige')
                 print('Õige')
-                võit+=1
+                õige+=1
             else:
                 game.append(f'Mäng number {i+1}, {valik} keeles - Vale') 
                 print('Vale')
-                kaotus+=1       
+                vale+=1       
         a.append(num)
     print()
     print(game)
-    if kaotus==0:
+    if vale==0:
         resÕ=100
         resV=0
-    elif võit==0:
+    elif õige==0:
         resÕ=0
         resV=100
     else:
-        resÕ=round((võit/i)*100),1
-        resV=round((kaotus/i)*100),1
+        resÕ=round((õige/x)*100),1
+        resV=round((vale/x)*100),1
     print(f'´Õige protsent - {resÕ}%')
     print(f'Vale protsent - {resV}%')
